@@ -1,0 +1,4 @@
+allow-flight-groups:
+  - developer
+  - alladmin
+  - admin

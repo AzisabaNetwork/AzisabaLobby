@@ -3,3 +3,8 @@ main: net.azisaba.lobby.AzisabaLobby
 version: ${project.version}
 author: siloneco
 description: ${project.description}
+depend:
+  - LuckPerms
+commands:
+  azisabalobby:
+    permission: azisabalobby.command
