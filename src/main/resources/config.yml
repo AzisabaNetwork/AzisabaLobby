@@ -1,4 +1,5 @@
 allow-flight-groups:
+  - owner
   - developer
   - alladmin
   - admin
