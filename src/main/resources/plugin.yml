@@ -1,0 +1,5 @@
+name: ${project.name}
+main: net.azisaba.lobby.AzisabaLobby
+version: ${project.version}
+author: siloneco
+description: ${project.description}
