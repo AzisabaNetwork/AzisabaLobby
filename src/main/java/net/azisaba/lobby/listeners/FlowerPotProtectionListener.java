@@ -10,7 +10,7 @@ public class FlowerPotProtectionListener implements Listener {
     @EventHandler
     public void onPot(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        if(player.hasPermission("azisabalobby.allow-flower-pot")) return;
+        if(player.hasPermission("allow-interact-flower-pot")) return;
         e.setCancelled(true);
     }
 }

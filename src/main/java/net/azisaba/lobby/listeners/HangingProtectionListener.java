@@ -12,7 +12,7 @@ public class HangingProtectionListener implements Listener {
     public void onHanging(EntityDamageByEntityEvent e) {
         Entity damager = e.getDamager();
         if (damager instanceof Player) {
-            if(damager.hasPermission("azisabalobby.allow-picture-frame")) return;
+            if(damager.hasPermission("azisabalobby.allow-destroy-painting")) return;
             e.setCancelled(true);
         }
     }

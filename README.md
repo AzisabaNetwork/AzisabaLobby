@@ -2,16 +2,10 @@
 
 ## Permission
 
-- `azisabalobby.allow-flower-pot`
+- `allow-interact-flower-pot`
   - Permissions related to the destruction of flowerpots.
   - default: `op`
-- `azisabalobby.allow-picture-frame`
-  - Permissions related to the destruction of picture frames.
-  - default: `op`
-- `azisabalobby.allow-flower-pot`
-  - Permissions related to the destruction of flowerpots.
-  - default: `op`
-- `azisabalobby.allow-picture-frame`
+- `azisabalobby.allow-destroy-painting`
   - Permissions related to the destruction of picture frames.
   - default: `op`
 - `azisabalobby.allow-creative-mode`

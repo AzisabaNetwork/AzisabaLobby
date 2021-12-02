@@ -5,9 +5,9 @@ author: siloneco
 description: ${project.description}
 
 permissions:
-  azisabalobby.allow-flower-pot:
+  azisabalobby.allow-interact-flower-pot:
     default: op
     description: 植木鉢の破壊に関するパーミッションです。
-  azisabalobby.allow-picture-frame:
+  azisabalobby.allow-destroy-painting:
     default: op
     description: 額縁の破壊に関するパーミッションです。
