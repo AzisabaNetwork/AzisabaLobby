@@ -1,6 +1,7 @@
 package net.azisaba.lobby.listeners;
 
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,6 +15,8 @@ public class HangingProtectionListener implements Listener {
         if (damager instanceof Player) {
             if(damager.hasPermission("azisabalobby.allow-destroy-painting")) return;
             e.setCancelled(true);
+            Entity entity = e.getEntity();
+            if (entity instanceof Painting) e.setCancelled(true);
         }
     }
 
