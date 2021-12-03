@@ -4,13 +4,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class FlowerPotProtectionListener implements Listener {
 
     @EventHandler
     public void onPot(PlayerInteractEvent e) {
         Player player = e.getPlayer();
+        ItemStack item = e.getItem();
         if(player.hasPermission("azisabalobby.allow-interact-flower-pot")) return;
-        e.setCancelled(true);
+        if(item != null) {
+            e.setCancelled(true);
+        }
     }
 }
