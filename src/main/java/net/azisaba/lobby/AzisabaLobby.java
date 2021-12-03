@@ -1,7 +1,6 @@
 package net.azisaba.lobby;
 
-import net.azisaba.lobby.listeners.CheckJoinListener;
-import net.azisaba.lobby.listeners.VoidToSpawnListener;
+import net.azisaba.lobby.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,6 +10,8 @@ public class AzisabaLobby extends JavaPlugin {
     getConfig().options().copyDefaults();
     Bukkit.getPluginManager().registerEvents(new VoidToSpawnListener(this), this);
     Bukkit.getPluginManager().registerEvents(new CheckJoinListener(), this);
+    Bukkit.getPluginManager().registerEvents(new FlowerPotProtectionListener(), this);
+    Bukkit.getPluginManager().registerEvents(new HangingProtectionListener(), this);
     Bukkit.getLogger().info(getName() + " enabled.");
   }
 
