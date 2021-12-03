@@ -2,7 +2,7 @@
 
 ## Permission
 
-- `allow-interact-flower-pot`
+- `azisabalobby.allow-interact-flower-pot`
   - Permissions related to the destruction of flowerpots.
   - default: `op`
 - `azisabalobby.allow-destroy-painting`
