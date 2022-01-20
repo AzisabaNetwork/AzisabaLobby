@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class HangingProtectionListener implements Listener {
-
     @EventHandler
     public void onHanging(EntityDamageByEntityEvent e) {
         Entity damager = e.getDamager();
@@ -19,5 +18,4 @@ public class HangingProtectionListener implements Listener {
         Entity entity = e.getEntity();
         if (entity instanceof Painting || entity instanceof ItemFrame) e.setCancelled(true);
     }
-
 }
