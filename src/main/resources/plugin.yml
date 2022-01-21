@@ -3,6 +3,7 @@ main: net.azisaba.lobby.AzisabaLobby
 version: ${project.version}
 author: siloneco
 description: ${project.description}
+api-version: 1.13
 
 permissions:
   azisabalobby.allow-interact-flower-pot:
