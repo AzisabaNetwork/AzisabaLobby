@@ -9,6 +9,8 @@ import java.util.List;
 @Data
 public class ServerInfo {
     private final Material material;
+    private final short itemDamage;
+    private final String itemTag;
     private final String name;
     private final List<String> servers;
     private final List<String> countedServers;

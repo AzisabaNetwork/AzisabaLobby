@@ -22,7 +22,7 @@ public class BungeeCordPluginMessageListener implements PluginMessageListener {
             String server = in.readUTF();
             int playerCount = in.readInt();
             ServerSelectionScreen.PLAYER_COUNT.put(server, playerCount);
-            plugin.getServerSelectionScreen().update();
+            plugin.getServerSelectionScreen().updateItems();
         }
     }
 }

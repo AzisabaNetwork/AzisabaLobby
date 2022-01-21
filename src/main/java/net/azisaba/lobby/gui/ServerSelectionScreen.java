@@ -2,6 +2,7 @@ package net.azisaba.lobby.gui;
 
 import net.azisaba.lobby.AzisabaLobby;
 import net.azisaba.lobby.config.ServerInfo;
+import net.azisaba.lobby.util.NMSUtil;
 import net.azisaba.lobby.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,6 +14,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -38,16 +40,42 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
 
     public ServerSelectionScreen(AzisabaLobby plugin) {
         this.plugin = plugin;
-        update();
+        initItems();
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    public void update() {
+    public void initItems() {
+        inventory.clear();
         this.plugin.getServers().forEach((slot, server) -> {
             int playerCount = getPlayerCount(server.getCountedServers());
-            ItemStack item = new ItemStack(server.getMaterial(), Util.clamp(playerCount, 1, 64));
+            ItemStack item = new ItemStack(server.getMaterial(), Util.clamp(playerCount, 1, 64), server.getItemDamage());
+            if (server.getItemTag() != null) {
+                Object tag = NMSUtil.parseTag(server.getItemTag());
+                item = NMSUtil.setTag(item, tag);
+            }
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + server.getName());
+            meta.addItemFlags(
+                    ItemFlag.HIDE_ATTRIBUTES,
+                    ItemFlag.HIDE_ENCHANTS,
+                    ItemFlag.HIDE_DESTROYS,
+                    ItemFlag.HIDE_PLACED_ON,
+                    ItemFlag.HIDE_UNBREAKABLE,
+                    ItemFlag.HIDE_POTION_EFFECTS
+            );
+            item.setItemMeta(meta);
+            this.inventory.setItem(slot, item);
+        });
+        updateItems();
+    }
+
+    public void updateItems() {
+        this.plugin.getServers().forEach((slot, server) -> {
+            int playerCount = getPlayerCount(server.getCountedServers());
+            ItemStack item = inventory.getItem(slot);
+            if (item == null) return;
+            ItemMeta meta = item.getItemMeta();
+            item.setAmount(Util.clamp(playerCount, 1, 64));
             List<String> lore = new ArrayList<>();
             lore.add("");
             lore.addAll(server.getDescription().stream().map(s -> ChatColor.WHITE + s).collect(Collectors.toList()));
@@ -66,7 +94,6 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
             lore.add("");
             meta.setLore(lore);
             item.setItemMeta(meta);
-            this.inventory.setItem(slot, item);
         });
     }
 
@@ -93,6 +120,7 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
     public void onInventoryClick(InventoryClickEvent e) {
         if (e.getInventory() == null || e.getClickedInventory() == null) return;
         if (e.getInventory().getHolder() != this || e.getClickedInventory().getHolder() != this) return;
+        e.setCancelled(true);
         ServerInfo server = plugin.getServers().get(e.getSlot());
         if (server == null) return;
         Util.requestConnect(plugin, (Player) e.getWhoClicked(), Util.random(server.getServers()));

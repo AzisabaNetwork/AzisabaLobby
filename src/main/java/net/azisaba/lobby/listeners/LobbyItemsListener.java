@@ -5,6 +5,7 @@ import net.azisaba.lobby.AzisabaLobby;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -34,6 +35,8 @@ public class LobbyItemsListener implements Listener {
     @EventHandler
     public void onUse(PlayerInteractEvent e) {
         if (SERVER_SELECTOR_ITEM.isSimilar(e.getItem())) {
+            e.setUseItemInHand(Event.Result.DENY);
+            e.setUseInteractedBlock(Event.Result.DENY);
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BLOCK_GLASS_BREAK, 2, 2);
             e.getPlayer().openInventory(plugin.getServerSelectionScreen().getInventory());
         }

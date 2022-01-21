@@ -58,6 +58,8 @@ public class AzisabaLobby extends JavaPlugin {
      * servers:
      *   '0':
      *     material: DIRT
+     *     itemDamage: 0
+     *     itemTag: "{CustomTags:'aaaa'}"
      *     name: "&aCool server"
      *     servers:
      *     - coolserver1
@@ -89,6 +91,8 @@ public class AzisabaLobby extends JavaPlugin {
       }
       Material material = Material.getMaterial(map.getOrDefault("material", "STONE").toString());
       if (material == null) material = Material.STONE;
+      short itemDamage = ((Number) map.getOrDefault("itemDamage", 0)).shortValue();
+      String itemTag = (String) map.get("itemTag");
       String name = ChatColor.translateAlternateColorCodes('&', map.get("name").toString());
       List<String> servers = (List<String>) map.get("servers");
       if (servers == null) {
@@ -113,6 +117,8 @@ public class AzisabaLobby extends JavaPlugin {
               slot,
               new ServerInfo(
                       material,
+                      itemDamage,
+                      itemTag,
                       name,
                       servers,
                       countedServers,
@@ -123,7 +129,7 @@ public class AzisabaLobby extends JavaPlugin {
               )
       );
     });
-    if (serverSelectionScreen != null) serverSelectionScreen.update();
+    if (serverSelectionScreen != null) serverSelectionScreen.initItems();
   }
 
   public Map<Integer, ServerInfo> getServers() {

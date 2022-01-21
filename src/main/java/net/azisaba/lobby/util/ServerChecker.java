@@ -20,6 +20,7 @@ public class ServerChecker implements Runnable {
     public void run() {
         Set<String> serversToCheck = getServersToCheck();
         for (String server : serversToCheck) {
+            if (server == null) continue;
             Util.requestPlayerCount(plugin, Util.random(new ArrayList<>(Bukkit.getOnlinePlayers())), server);
         }
     }
