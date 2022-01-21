@@ -44,7 +44,7 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
 
     public void update() {
         this.plugin.getServers().forEach((slot, server) -> {
-            int playerCount = getPlayerCount(server.getServers());
+            int playerCount = getPlayerCount(server.getCountedServers());
             ItemStack item = new ItemStack(server.getMaterial(), Util.clamp(playerCount, 1, 64));
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + server.getName());

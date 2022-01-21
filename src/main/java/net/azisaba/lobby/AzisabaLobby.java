@@ -101,8 +101,14 @@ public class AzisabaLobby extends JavaPlugin {
       List<String> description = (List<String>) map.get("description");
       if (description == null) description = Collections.emptyList();
       String status = ChatColor.translateAlternateColorCodes('&', (String) map.getOrDefault("status", "開発中"));
-      String recommendedVersion = ChatColor.translateAlternateColorCodes('&', (String) map.get("recommendedVersion"));
-      String compatibleVersion = ChatColor.translateAlternateColorCodes('&', (String) map.get("compatibleVersion"));
+      String recommendedVersion = (String) map.get("recommendedVersion");
+      String compatibleVersion = (String) map.get("compatibleVersion");
+      if (recommendedVersion != null) {
+        recommendedVersion = ChatColor.translateAlternateColorCodes('&', recommendedVersion);
+      }
+      if (compatibleVersion != null) {
+        compatibleVersion = ChatColor.translateAlternateColorCodes('&', compatibleVersion);
+      }
       this.servers.put(
               slot,
               new ServerInfo(
