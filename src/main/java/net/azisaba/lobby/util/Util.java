@@ -12,6 +12,7 @@ public class Util {
     private static final Random RANDOM = new Random();
 
     public static void requestPlayerCount(Plugin plugin, Player player, String server) {
+        if (player == null) return;
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("PlayerCount");
         out.writeUTF(server);
@@ -31,6 +32,7 @@ public class Util {
     }
 
     public static <T> T random(List<T> list) {
+        if (list.isEmpty()) return null;
         return list.get(RANDOM.nextInt(list.size()));
     }
 
