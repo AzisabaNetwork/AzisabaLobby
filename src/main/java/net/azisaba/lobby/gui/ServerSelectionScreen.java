@@ -9,9 +9,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
@@ -19,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,18 +37,22 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
         return count;
     }
 
+    private final Inventory previousInventory;
     private final AzisabaLobby plugin;
+    private final Map<Integer, ServerInfo> servers;
     private final Inventory inventory = Bukkit.createInventory(this, 54, "サーバー選択");
 
-    public ServerSelectionScreen(AzisabaLobby plugin) {
+    public ServerSelectionScreen(Inventory previousInventory, AzisabaLobby plugin, Map<Integer, ServerInfo> servers) {
+        this.previousInventory = previousInventory;
         this.plugin = plugin;
+        this.servers = servers;
         initItems();
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
     public void initItems() {
         inventory.clear();
-        this.plugin.getServers().forEach((slot, server) -> {
+        servers.forEach((slot, server) -> {
             int playerCount = getPlayerCount(server.getCountedServers());
             ItemStack item = new ItemStack(server.getMaterial(), Util.clamp(playerCount, 1, 64), server.getItemDamage());
             if (server.getItemTag() != null) {
@@ -70,7 +76,7 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
     }
 
     public void updateItems() {
-        this.plugin.getServers().forEach((slot, server) -> {
+        servers.forEach((slot, server) -> {
             int playerCount = getPlayerCount(server.getCountedServers());
             ItemStack item = inventory.getItem(slot);
             if (item == null) return;
@@ -103,13 +109,6 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
     }
 
     @EventHandler
-    public void onInventoryMoveItem(InventoryMoveItemEvent e) {
-        if (e.getDestination() == null) return;
-        if (e.getDestination().getHolder() != this) return;
-        e.setCancelled(true);
-    }
-
-    @EventHandler
     public void onInventoryDrag(InventoryDragEvent e) {
         if (e.getInventory() == null) return;
         if (e.getInventory().getHolder() != this) return;
@@ -122,8 +121,37 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
         if (e.getInventory().getHolder() != this) return;
         e.setCancelled(true);
         if (e.getClickedInventory().getHolder() != this) return;
-        ServerInfo server = plugin.getServers().get(e.getSlot());
+        ServerInfo server = servers.get(e.getSlot());
         if (server == null || server.getServers().isEmpty()) return;
-        Util.requestConnect(plugin, (Player) e.getWhoClicked(), Util.random(server.getServers()));
+        if (!server.isSelectOnly() && (!server.isSelectableServers() || e.getClick() == ClickType.LEFT || e.getClick() == ClickType.SHIFT_LEFT)) {
+            Util.requestConnect(plugin, (Player) e.getWhoClicked(), Util.random(server.getServers()));
+        } else if (server.isSelectOnly() || e.getClick() == ClickType.RIGHT || e.getClick() == ClickType.SHIFT_RIGHT) {
+            Map<Integer, ServerInfo> serverInfoList = new HashMap<>();
+            int idx = 0;
+            for (String s : server.getServers()) {
+                serverInfoList.put(idx++, new ServerInfo(
+                        server.getMaterial(),
+                        server.getItemDamage(),
+                        server.getItemTag(),
+                        server.getName() + " > " + s,
+                        Collections.singletonList(s),
+                        Collections.singletonList(s),
+                        server.getDescription(),
+                        server.getStatus(),
+                        server.getRecommendedVersion(),
+                        server.getCompatibleVersion(),
+                        false,
+                        false
+                ));
+            }
+            e.getWhoClicked().openInventory(new ServerSelectionScreen(inventory, plugin, serverInfoList).inventory);
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent e) {
+        if (e.getInventory() != null && e.getInventory().getHolder() == this && previousInventory != null) {
+            Bukkit.getScheduler().runTask(plugin, () -> e.getPlayer().openInventory(previousInventory));
+        }
     }
 }

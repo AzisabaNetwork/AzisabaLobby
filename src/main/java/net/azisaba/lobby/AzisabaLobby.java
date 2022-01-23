@@ -36,7 +36,7 @@ public class AzisabaLobby extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new HangingProtectionListener(), this);
     Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeCordPluginMessageListener(this));
-    serverSelectionScreen = new ServerSelectionScreen(this);
+    this.serverSelectionScreen = new ServerSelectionScreen(null, this, this.getServers());
     new ServerChecker(this);
     Bukkit.getLogger().info(getName() + " enabled.");
   }
@@ -74,6 +74,7 @@ public class AzisabaLobby extends JavaPlugin {
      *     status: "&5公開中"
      *     recommendedVersion: "2.0"
      *     compatibleVersion: "1.RV-pre1 - 2.0"
+     *     selectableServers: true # right click to open server menu (a screen which contains coolserver1, and coolserver2)
      */
     servers.clear();
     getConfig().getConfigurationSection("servers").getValues(false).forEach((key, value) -> {
@@ -113,6 +114,8 @@ public class AzisabaLobby extends JavaPlugin {
       if (compatibleVersion != null) {
         compatibleVersion = ChatColor.translateAlternateColorCodes('&', compatibleVersion);
       }
+      boolean selectableServers = Boolean.parseBoolean(String.valueOf(map.get("selectableServers")));
+      boolean selectOnly = Boolean.parseBoolean(String.valueOf(map.get("selectOnly")));
       this.servers.put(
               slot,
               new ServerInfo(
@@ -125,7 +128,9 @@ public class AzisabaLobby extends JavaPlugin {
                       description.stream().map(s -> ChatColor.translateAlternateColorCodes('&', s)).collect(Collectors.toList()),
                       status,
                       recommendedVersion,
-                      compatibleVersion
+                      compatibleVersion,
+                      selectableServers,
+                      selectOnly
               )
       );
     });
