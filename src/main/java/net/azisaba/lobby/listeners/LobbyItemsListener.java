@@ -41,7 +41,7 @@ public class LobbyItemsListener implements Listener {
             e.getPlayer().getInventory().setItem(0, null);
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BLOCK_GLASS_BREAK, 2, 2);
             e.getPlayer().openInventory(plugin.getServerSelectionScreen().getInventory());
-            Bukkit.getScheduler().runTask(plugin, () -> e.getPlayer().getInventory().setItem(0, SERVER_SELECTOR_ITEM));
+            Bukkit.getScheduler().runTaskLater(plugin, () -> e.getPlayer().getInventory().setItem(0, SERVER_SELECTOR_ITEM), 5);
         }
     }
 }
