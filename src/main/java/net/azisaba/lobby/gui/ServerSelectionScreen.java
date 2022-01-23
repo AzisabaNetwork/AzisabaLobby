@@ -22,10 +22,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ServerSelectionScreen implements InventoryHolder, Listener {
@@ -126,12 +124,17 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
         ServerInfo server = servers.get(e.getSlot());
         if (server == null || server.getServers().isEmpty()) return;
         if (e.getWhoClicked().hasPermission("azisabalobby.show-all-server-menu") && e.getClick() == ClickType.MIDDLE) {
-            Set<String> set = new HashSet<>();
-            set.addAll(server.getServers());
-            set.addAll(server.getCountedServers());
+            List<String> list = new ArrayList<>();
+            for (String s : server.getServers()) {
+                if (!list.contains(s)) list.add(s);
+            }
+            for (String s : server.getCountedServers()) {
+                if (!list.contains(s)) list.add(s);
+            }
             Map<Integer, ServerInfo> serverInfoList = new HashMap<>();
             int idx = 0;
-            for (String s : set) {
+            for (String s : list) {
+                if (idx >= 54) continue;
                 serverInfoList.put(idx++, new ServerInfo(
                         server.getMaterial(),
                         server.getItemDamage(),
@@ -156,7 +159,8 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
             Map<Integer, ServerInfo> serverInfoList = new HashMap<>();
             int idx = 0;
             for (String s : server.getServers()) {
-                serverInfoList.put(idx++, new ServerInfo(
+                if (idx >= 54) continue;
+                serverInfoList.put(idx, new ServerInfo(
                         server.getMaterial(),
                         server.getItemDamage(),
                         server.getItemTag(),
@@ -170,6 +174,7 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
                         false,
                         false
                 ));
+                idx++;
             }
             e.getWhoClicked().openInventory(new ServerSelectionScreen(inventory, plugin, serverInfoList).inventory);
         }

@@ -2,6 +2,7 @@ package net.azisaba.lobby.listeners;
 
 import lombok.RequiredArgsConstructor;
 import net.azisaba.lobby.AzisabaLobby;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -37,8 +38,10 @@ public class LobbyItemsListener implements Listener {
         if (SERVER_SELECTOR_ITEM.isSimilar(e.getItem())) {
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
+            e.getPlayer().getInventory().setItem(0, null);
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BLOCK_GLASS_BREAK, 2, 2);
             e.getPlayer().openInventory(plugin.getServerSelectionScreen().getInventory());
+            Bukkit.getScheduler().runTask(plugin, () -> e.getPlayer().getInventory().setItem(0, SERVER_SELECTOR_ITEM));
         }
     }
 }
