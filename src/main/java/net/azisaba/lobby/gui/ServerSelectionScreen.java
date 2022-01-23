@@ -22,8 +22,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ServerSelectionScreen implements InventoryHolder, Listener {
@@ -123,6 +125,31 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
         if (e.getClickedInventory().getHolder() != this) return;
         ServerInfo server = servers.get(e.getSlot());
         if (server == null || server.getServers().isEmpty()) return;
+        if (e.getWhoClicked().hasPermission("azisabalobby.show-all-server-menu") && e.getClick() == ClickType.MIDDLE) {
+            Set<String> set = new HashSet<>();
+            set.addAll(server.getServers());
+            set.addAll(server.getCountedServers());
+            Map<Integer, ServerInfo> serverInfoList = new HashMap<>();
+            int idx = 0;
+            for (String s : set) {
+                serverInfoList.put(idx++, new ServerInfo(
+                        server.getMaterial(),
+                        server.getItemDamage(),
+                        server.getItemTag(),
+                        server.getName() + " > " + s,
+                        Collections.singletonList(s),
+                        Collections.singletonList(s),
+                        server.getDescription(),
+                        server.getStatus(),
+                        server.getRecommendedVersion(),
+                        server.getCompatibleVersion(),
+                        false,
+                        false
+                ));
+            }
+            e.getWhoClicked().openInventory(new ServerSelectionScreen(inventory, plugin, serverInfoList).inventory);
+            return;
+        }
         if (!server.isSelectOnly() && (!server.isSelectableServers() || e.getClick() == ClickType.LEFT || e.getClick() == ClickType.SHIFT_LEFT)) {
             Util.requestConnect(plugin, (Player) e.getWhoClicked(), Util.random(server.getServers()));
         } else if (server.isSelectOnly() || e.getClick() == ClickType.RIGHT || e.getClick() == ClickType.SHIFT_RIGHT) {

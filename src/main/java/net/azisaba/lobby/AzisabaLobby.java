@@ -54,6 +54,7 @@ public class AzisabaLobby extends JavaPlugin {
 
   @SuppressWarnings("unchecked")
   public void reload() {
+    // TODO: this code sucks
     /*
      * servers:
      *   '0':
