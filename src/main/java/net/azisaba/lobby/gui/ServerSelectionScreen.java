@@ -122,7 +122,7 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
         if (e.getInventory().getHolder() != this || e.getClickedInventory().getHolder() != this) return;
         e.setCancelled(true);
         ServerInfo server = plugin.getServers().get(e.getSlot());
-        if (server == null) return;
+        if (server == null || server.getServers().isEmpty()) return;
         Util.requestConnect(plugin, (Player) e.getWhoClicked(), Util.random(server.getServers()));
     }
 }

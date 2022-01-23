@@ -20,6 +20,7 @@ public class Util {
     }
 
     public static void requestConnect(Plugin plugin, Player player, String server) {
+        if (server == null) return;
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("Connect");
         out.writeUTF(server);
