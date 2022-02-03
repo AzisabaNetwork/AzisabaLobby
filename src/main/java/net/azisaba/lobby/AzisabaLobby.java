@@ -7,6 +7,7 @@ import net.azisaba.lobby.listeners.CheckJoinListener;
 import net.azisaba.lobby.listeners.FlowerPotProtectionListener;
 import net.azisaba.lobby.listeners.HangingProtectionListener;
 import net.azisaba.lobby.listeners.LobbyItemsListener;
+import net.azisaba.lobby.listeners.PortalListener;
 import net.azisaba.lobby.listeners.VoidToSpawnListener;
 import net.azisaba.lobby.util.ServerChecker;
 import org.bukkit.Bukkit;
@@ -34,6 +35,7 @@ public class AzisabaLobby extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new CheckJoinListener(), this);
     Bukkit.getPluginManager().registerEvents(new FlowerPotProtectionListener(), this);
     Bukkit.getPluginManager().registerEvents(new HangingProtectionListener(), this);
+    Bukkit.getPluginManager().registerEvents(new PortalListener(this), this);
     Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeCordPluginMessageListener(this));
     this.serverSelectionScreen = new ServerSelectionScreen(null, this, this.getServers());
