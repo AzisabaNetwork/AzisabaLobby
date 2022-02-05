@@ -59,20 +59,17 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
                 Object tag = NMSUtil.parseTag(server.getItemTag());
                 item = NMSUtil.setTag(item, tag);
             }
-            plugin.getLogger().warning("Item is null: " + server);
-            if (item != null && item.hasItemMeta()) {
-                ItemMeta meta = item.getItemMeta();
-                meta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + server.getName());
-                meta.addItemFlags(
-                        ItemFlag.HIDE_ATTRIBUTES,
-                        ItemFlag.HIDE_ENCHANTS,
-                        ItemFlag.HIDE_DESTROYS,
-                        ItemFlag.HIDE_PLACED_ON,
-                        ItemFlag.HIDE_UNBREAKABLE,
-                        ItemFlag.HIDE_POTION_EFFECTS
-                );
-                item.setItemMeta(meta);
-            }
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + server.getName());
+            meta.addItemFlags(
+                    ItemFlag.HIDE_ATTRIBUTES,
+                    ItemFlag.HIDE_ENCHANTS,
+                    ItemFlag.HIDE_DESTROYS,
+                    ItemFlag.HIDE_PLACED_ON,
+                    ItemFlag.HIDE_UNBREAKABLE,
+                    ItemFlag.HIDE_POTION_EFFECTS
+            );
+            item.setItemMeta(meta);
             this.inventory.setItem(slot, item);
         });
         updateItems();
