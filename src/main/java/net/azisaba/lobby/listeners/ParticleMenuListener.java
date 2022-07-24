@@ -41,7 +41,7 @@ public class ParticleMenuListener implements Listener {
     if(PARTICLE_MENU_ITEM.isSimilar(e.getItem())) {
       e.setUseItemInHand(Result.DENY);
       e.setUseInteractedBlock(Result.DENY);
-      e.getPlayer().getInventory().setItem(3, null);
+      e.getPlayer().getInventory().setItem(2, null);
       e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENTITY_CAT_PURREOW, 2, 2);
       Bukkit.dispatchCommand(e.getPlayer(), "ph");
       Bukkit.getScheduler().runTaskLater(plugin, () -> e.getPlayer().getInventory().setItem(3, PARTICLE_MENU_ITEM), 5);
