@@ -8,6 +8,7 @@ import net.azisaba.lobby.listeners.FlowerPotProtectionListener;
 import net.azisaba.lobby.listeners.HangingProtectionListener;
 import net.azisaba.lobby.listeners.ParticleMenuListener;
 import net.azisaba.lobby.listeners.ServerSelectorListener;
+import net.azisaba.lobby.listeners.KickReasonWatcherListener;
 import net.azisaba.lobby.listeners.PortalListener;
 import net.azisaba.lobby.listeners.VoidToSpawnListener;
 import net.azisaba.lobby.listeners.PlayerJoinGuideListener;
@@ -40,6 +41,7 @@ public class AzisabaLobby extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new PortalListener(this), this);
     Bukkit.getPluginManager().registerEvents(new PlayerJoinGuideListener(), this);
     Bukkit.getPluginManager().registerEvents(new ParticleMenuListener(this), this);
+    Bukkit.getPluginManager().registerEvents(new KickReasonWatcherListener(), this);
     Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeCordPluginMessageListener(this));
     this.serverSelectionScreen = new ServerSelectionScreen(null, this, this.getServers());
@@ -56,6 +58,10 @@ public class AzisabaLobby extends JavaPlugin {
 
   public ServerSelectionScreen getServerSelectionScreen() {
     return serverSelectionScreen;
+  }
+
+  public static AzisabaLobby getInstance() {
+    return JavaPlugin.getPlugin(AzisabaLobby.class);
   }
 
   @SuppressWarnings("unchecked")
