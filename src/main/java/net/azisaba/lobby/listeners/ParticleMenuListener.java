@@ -44,7 +44,7 @@ public class ParticleMenuListener implements Listener {
       e.getPlayer().getInventory().setItem(2, null);
       e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENTITY_CAT_PURREOW, 2, 2);
       Bukkit.dispatchCommand(e.getPlayer(), "ph");
-      Bukkit.getScheduler().runTaskLater(plugin, () -> e.getPlayer().getInventory().setItem(3, PARTICLE_MENU_ITEM), 5);
+      Bukkit.getScheduler().runTaskLater(plugin, () -> e.getPlayer().getInventory().setItem(2, PARTICLE_MENU_ITEM), 5);
     }
   }
 
