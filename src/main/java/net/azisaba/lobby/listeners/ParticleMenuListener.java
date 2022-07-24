@@ -33,7 +33,7 @@ public class ParticleMenuListener implements Listener {
 
   @EventHandler
   public void onJoin(PlayerJoinEvent e) {
-    e.getPlayer().getInventory().setItem(3, PARTICLE_MENU_ITEM);
+    e.getPlayer().getInventory().setItem(2, PARTICLE_MENU_ITEM);
   }
 
   @EventHandler
