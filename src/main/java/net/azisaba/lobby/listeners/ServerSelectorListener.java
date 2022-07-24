@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 
 @RequiredArgsConstructor
-public class LobbyItemsListener implements Listener {
+public class ServerSelectorListener implements Listener {
     private static final ItemStack SERVER_SELECTOR_ITEM = new ItemStack(Material.RAW_FISH);
     private final AzisabaLobby plugin;
 
