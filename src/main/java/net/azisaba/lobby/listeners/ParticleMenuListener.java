@@ -1,8 +1,6 @@
 package net.azisaba.lobby.listeners;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.lobby.AzisabaLobby;
 import org.bukkit.Bukkit;
