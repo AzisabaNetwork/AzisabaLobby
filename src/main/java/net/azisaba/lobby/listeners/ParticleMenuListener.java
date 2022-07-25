@@ -1,6 +1,7 @@
 package net.azisaba.lobby.listeners;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.lobby.AzisabaLobby;
@@ -24,10 +25,8 @@ public class ParticleMenuListener implements Listener {
 
   static {
     ItemMeta meta = PARTICLE_MENU_ITEM.getItemMeta();
-    meta.setDisplayName(ChatColor.AQUA + "パーティクルメニューを開く");
-    List<String> lores = new ArrayList<>();
-    lores.add(ChatColor.GRAY + "右クリックでパーティクルをつけることができるメニューを開きます!\n");
-    meta.setLore(lores);
+    meta.setDisplayName(ChatColor.LIGHT_PURPLE + "パーティクルメニューを開く!");
+    meta.setLore(Arrays.asList(ChatColor.LIGHT_PURPLE + "右クリックでパーティクルをつけることができるメニューを開きます!", ChatColor.LIGHT_PURPLE + "リンゴですが、食べられません!"));
     PARTICLE_MENU_ITEM.setItemMeta(meta);
   }
 
