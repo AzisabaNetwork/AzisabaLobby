@@ -3,7 +3,7 @@
 
   <groupId>net.azisaba</groupId>
   <artifactId>AzisabaLobby</artifactId>
-  <version>1.1.4</version>
+  <version>1.1.5</version>
 
   <name>${project.artifactId}</name>
   <description>Azisaba Lobby Plugin</description>
