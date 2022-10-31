@@ -14,6 +14,7 @@ public class ServerChecker implements Runnable {
     public ServerChecker(AzisabaLobby plugin) {
         this.plugin = plugin;
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this, 20, 200);
+        Bukkit.getScheduler().runTaskTimer(plugin, () -> plugin.getServerSelectionScreen().updateItems(), 200, 200);
     }
 
     @Override

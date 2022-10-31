@@ -1,1 +1,21 @@
 kick-reason-watcher-webhook-url: ""
+servers:
+  '0':
+    material: DIRT
+    itemDamage: 0
+    itemTag: "{CustomTags:'aaaa'}"
+    name: "&aCool server" # required
+    servers: # required
+    - coolserver1
+    - coolserver2
+    countedServers:
+    - coolserver1
+    - coolserver2
+    - coolserver100
+    - coolserver101
+    description:
+    - ":eyes:"
+    status: "&5公開中"
+    recommendedVersion: "2.0"
+    compatibleVersion: "1.RV-pre1 - 2.0"
+    selectableServers: true # right click to open server menu (a screen which contains coolserver1, and coolserver2)

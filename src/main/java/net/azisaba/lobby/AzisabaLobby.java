@@ -43,7 +43,7 @@ public class AzisabaLobby extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new ParticleMenuListener(this), this);
     Bukkit.getPluginManager().registerEvents(new KickReasonWatcherListener(), this);
     Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-    Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeCordPluginMessageListener(this));
+    Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeCordPluginMessageListener());
     this.serverSelectionScreen = new ServerSelectionScreen(null, this, this.getServers());
     new ServerChecker(this);
     Bukkit.getLogger().info(getName() + " enabled.");
@@ -92,7 +92,7 @@ public class AzisabaLobby extends JavaPlugin {
     servers.clear();
     getConfig().getConfigurationSection("servers").getValues(false).forEach((key, value) -> {
       int slot = Integer.parseInt(key);
-      if (slot < 0 || slot >= 54) {
+      if (slot < 0 || slot > 53) {
         throw new RuntimeException("Slot is out of range (acceptable range: 0-53, but got " + slot + ")");
       }
       Map<String, Object> map;
