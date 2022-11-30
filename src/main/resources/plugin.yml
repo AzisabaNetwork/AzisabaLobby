@@ -4,6 +4,8 @@ version: ${project.version}
 author: siloneco
 description: ${project.description}
 api-version: 1.13
+depend:
+  - AzisabaAchievements
 
 permissions:
   azisabalobby.allow-interact-flower-pot:

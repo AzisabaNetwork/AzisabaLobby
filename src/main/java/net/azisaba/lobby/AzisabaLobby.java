@@ -1,11 +1,14 @@
 package net.azisaba.lobby;
 
+import net.azisaba.azisabaachievements.api.AzisabaAchievementsProvider;
+import net.azisaba.azisabaachievements.api.Key;
 import net.azisaba.lobby.config.ServerInfo;
 import net.azisaba.lobby.gui.ServerSelectionScreen;
 import net.azisaba.lobby.listeners.BungeeCordPluginMessageListener;
 import net.azisaba.lobby.listeners.CheckJoinListener;
 import net.azisaba.lobby.listeners.FlowerPotProtectionListener;
 import net.azisaba.lobby.listeners.HangingProtectionListener;
+import net.azisaba.lobby.listeners.JoinAchievementListener;
 import net.azisaba.lobby.listeners.ParticleMenuListener;
 import net.azisaba.lobby.listeners.ServerSelectorListener;
 import net.azisaba.lobby.listeners.KickReasonWatcherListener;
@@ -42,10 +45,22 @@ public class AzisabaLobby extends JavaPlugin {
     Bukkit.getPluginManager().registerEvents(new PlayerJoinGuideListener(), this);
     Bukkit.getPluginManager().registerEvents(new ParticleMenuListener(this), this);
     Bukkit.getPluginManager().registerEvents(new KickReasonWatcherListener(), this);
+    Bukkit.getPluginManager().registerEvents(new JoinAchievementListener(), this);
     Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeCordPluginMessageListener());
     this.serverSelectionScreen = new ServerSelectionScreen(null, this, this.getServers());
     new ServerChecker(this);
+    AzisabaAchievementsProvider.get()
+            .getAchievementManager()
+            .createAchievement(Key.key("azisaba", "join"), 1, 10)
+            .whenComplete((data, throwable) -> {
+              if (throwable != null) {
+                // already exists
+                getLogger().info("Failed to create achievement data: " + throwable.getMessage());
+              } else {
+                getLogger().info("Created achievement " + data.getKey());
+              }
+            });
     Bukkit.getLogger().info(getName() + " enabled.");
   }
 
