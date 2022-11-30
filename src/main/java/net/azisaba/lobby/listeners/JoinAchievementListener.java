@@ -18,7 +18,7 @@ public class JoinAchievementListener implements Listener {
                                 .getAchievementManager()
                                 .progressAchievement(e.getPlayer().getUniqueId(), Key.key("azisaba", "join"), 1))
                 .sync()
-                .delay(1, TimeUnit.SECONDS)
+                .delay(2, TimeUnit.SECONDS)
                 .schedule();
     }
 }
