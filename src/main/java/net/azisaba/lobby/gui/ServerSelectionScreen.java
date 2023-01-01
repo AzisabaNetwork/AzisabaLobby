@@ -54,10 +54,17 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
         inventory.clear();
         servers.forEach((slot, server) -> {
             int playerCount = getPlayerCount(server.getCountedServers());
+            if (!server.getMaterial().isItem()) {
+                throw new RuntimeException("Invalid material: " + server.getMaterial());
+            }
             ItemStack item = new ItemStack(server.getMaterial(), Util.clamp(playerCount, 1, 64), server.getItemDamage());
             if (server.getItemTag() != null) {
                 Object tag = NMSUtil.parseTag(server.getItemTag());
                 item = NMSUtil.setTag(item, tag);
+            }
+            if (item == null) {
+                plugin.getLogger().warning("Invalid material?: " + server.getMaterial());
+                item = new ItemStack(server.getMaterial(), Util.clamp(playerCount, 1, 64), server.getItemDamage());
             }
             ItemMeta meta = item.getItemMeta();
             meta.setDisplayName("" + ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + server.getName());
@@ -110,15 +117,13 @@ public class ServerSelectionScreen implements InventoryHolder, Listener {
 
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent e) {
-        if (e.getInventory() == null) return;
         if (e.getInventory().getHolder() != this) return;
         e.setCancelled(true);
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getInventory() == null || e.getClickedInventory() == null) return;
-        if (e.getInventory().getHolder() != this) return;
+        if (e.getClickedInventory() == null || e.getInventory().getHolder() != this) return;
         e.setCancelled(true);
         if (e.getClickedInventory().getHolder() != this) return;
         ServerInfo server = servers.get(e.getSlot());

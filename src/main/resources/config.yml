@@ -1,4 +1,7 @@
 kick-reason-watcher-webhook-url: ""
+
+secret-achievement-key: "secret"
+
 servers:
   '0':
     material: DIRT

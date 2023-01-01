@@ -2,9 +2,9 @@ package net.azisaba.lobby.listeners;
 
 import lombok.RequiredArgsConstructor;
 import net.azisaba.lobby.AzisabaLobby;
+import net.azisaba.lobby.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -18,14 +18,16 @@ import java.util.Arrays;
 
 @RequiredArgsConstructor
 public class ServerSelectorListener implements Listener {
-    private static final ItemStack SERVER_SELECTOR_ITEM = new ItemStack(Material.RAW_FISH);
+    private static final ItemStack SERVER_SELECTOR_ITEM = new ItemStack(Util.findAny("RAW_FISH", "COD"));
     private final AzisabaLobby plugin;
 
     static {
         ItemMeta meta = SERVER_SELECTOR_ITEM.getItemMeta();
-        meta.setDisplayName(ChatColor.AQUA + "サーバーに遊びに行く！");
-        meta.setLore(Arrays.asList(ChatColor.GRAY + "右クリックでサーバー選択画面を開きます！", ChatColor.GRAY + "食用ではありません！"));
-        SERVER_SELECTOR_ITEM.setItemMeta(meta);
+        if (meta != null) {
+            meta.setDisplayName(ChatColor.AQUA + "サーバーに遊びに行く！");
+            meta.setLore(Arrays.asList(ChatColor.GRAY + "右クリックでサーバー選択画面を開きます！", ChatColor.GRAY + "食用ではありません！"));
+            SERVER_SELECTOR_ITEM.setItemMeta(meta);
+        }
     }
 
     @EventHandler

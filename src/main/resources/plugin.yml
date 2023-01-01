@@ -4,7 +4,7 @@ version: ${project.version}
 author: siloneco
 description: ${project.description}
 api-version: 1.13
-depend:
+softdepend:
   - AzisabaAchievements
 
 permissions:
@@ -14,3 +14,7 @@ permissions:
   azisabalobby.allow-destroy-painting:
     default: op
     description: 額縁の破壊に関するパーミッションです。
+
+commands:
+  secrets:
+    permission: azisabalobby.command.secrets

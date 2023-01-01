@@ -14,9 +14,6 @@ public class KickReasonWatcherListener implements Listener {
 
     @EventHandler
     public void onPlayerKick(PlayerKickEvent e) {
-        if (e.getReason() == null) {
-            return;
-        }
         for (String reason : REASONS) {
             if (ChatColor.stripColor(e.getReason()).contains(reason)) {
                 String content = "`" + e.getPlayer().getName() + "` (`" + e.getPlayer().getUniqueId() + "`)が`" + e.getReason() + "`でキックされました。(stripColor: `" + ChatColor.stripColor(e.getReason()) + "`)";

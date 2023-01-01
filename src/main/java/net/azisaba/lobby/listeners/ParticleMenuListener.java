@@ -1,7 +1,5 @@
 package net.azisaba.lobby.listeners;
 
-import java.util.Arrays;
-import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.lobby.AzisabaLobby;
 import org.bukkit.Bukkit;
@@ -16,6 +14,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Collections;
+
 @RequiredArgsConstructor
 public class ParticleMenuListener implements Listener {
 
@@ -24,10 +24,12 @@ public class ParticleMenuListener implements Listener {
 
   static {
     ItemMeta meta = PARTICLE_MENU_ITEM.getItemMeta();
-    meta.setDisplayName(ChatColor.LIGHT_PURPLE + "パーティクルメニューを開く!");
-    meta.setLore(
-        Collections.singletonList(ChatColor.LIGHT_PURPLE + "右クリックでパーティクルをつけることができるメニューを開きます!"));
-    PARTICLE_MENU_ITEM.setItemMeta(meta);
+    if (meta != null) {
+      meta.setDisplayName(ChatColor.LIGHT_PURPLE + "パーティクルメニューを開く!");
+      meta.setLore(
+              Collections.singletonList(ChatColor.LIGHT_PURPLE + "右クリックでパーティクルをつけることができるメニューを開きます!"));
+      PARTICLE_MENU_ITEM.setItemMeta(meta);
+    }
   }
 
   @EventHandler

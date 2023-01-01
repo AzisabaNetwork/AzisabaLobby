@@ -16,7 +16,7 @@ public class JoinAchievementListener implements Listener {
                 .builder(() ->
                         AzisabaAchievementsProvider.get()
                                 .getAchievementManager()
-                                .progressAchievement(e.getPlayer().getUniqueId(), Key.key("azisaba", "join"), 1))
+                                .progressAchievement(e.getPlayer().getUniqueId(), Key.key("azisaba", "general/lobby/join"), 1))
                 .sync()
                 .delay(2, TimeUnit.SECONDS)
                 .schedule();

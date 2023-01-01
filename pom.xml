@@ -61,6 +61,15 @@
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
     </repository>
+    <repository>
+      <id>azisaba</id>
+      <url>https://repo.azisaba.net/repository/maven-public/</url>
+    </repository>
+    <repository>
+      <id>acrylic-repo</id>
+      <url>https://repo.acrylicstyle.xyz/repository/maven-public/</url>
+    </repository>
+
   </repositories>
 
   <dependencies>
@@ -82,6 +91,6 @@
       <version>0.0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
-
+    <!-- xyz.acrylicstyle.java-util:* is located at: https://github.com/acrylic-style/java-util/tree/v1 -->
   </dependencies>
 </project>

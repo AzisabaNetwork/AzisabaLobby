@@ -18,14 +18,14 @@ public class VoidToSpawnListener implements Listener {
   public void onMoveInVoid(PlayerMoveEvent e) {
     Player p = e.getPlayer();
 
-    if (e.getTo().getY() >= 0) {
+    if (e.getPlayer().getLocation().getY() >= 0) {
       return;
     }
-    if (!e.getTo().getWorld().getName().equalsIgnoreCase("lobby")) {
+    if (!e.getPlayer().getWorld().getName().equalsIgnoreCase("lobby")) {
       return;
     }
 
-    Location loc = new Location(e.getTo().getWorld(), 0.5, 40, 0.5, 0, 0);
+    Location loc = new Location(e.getPlayer().getWorld(), 0.5, 40, 0.5, 0, 0);
     Bukkit.getScheduler().runTaskLater(plugin, () -> p.teleport(loc), 0L);
   }
 }
