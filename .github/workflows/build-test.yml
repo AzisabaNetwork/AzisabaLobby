@@ -25,5 +25,6 @@ jobs:
           distribution: "adopt"
       - uses: gradle/gradle-build-action@v2
       - run: java -version
+      - run: chmod +x gradlew
       - run: ./gradlew --version
       - run: ./gradlew build
