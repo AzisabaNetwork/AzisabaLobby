@@ -1,4 +1,4 @@
-package net.azisaba.lobby.listeners;
+package net.azisaba.lobby.listener;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -6,15 +6,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class FlowerPotProtectionListener implements Listener {
     @EventHandler
-    public void onPot(PlayerInteractEvent e) {
-        Player player = e.getPlayer();
-        Block block = e.getClickedBlock();
+    public void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        Block block = event.getClickedBlock();
         if (player.hasPermission("azisabalobby.allow-interact-flower-pot")) return;
         if (block != null && block.getType() == Material.FLOWER_POT) {
-            e.setCancelled(true);
+            event.setCancelled(true);
         }
     }
 }

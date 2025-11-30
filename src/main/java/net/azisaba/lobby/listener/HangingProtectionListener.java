@@ -1,4 +1,4 @@
-package net.azisaba.lobby.listeners;
+package net.azisaba.lobby.listener;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;

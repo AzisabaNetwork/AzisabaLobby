@@ -1,4 +1,4 @@
-package net.azisaba.lobby.listeners;
+package net.azisaba.lobby.listener;
 
 import net.azisaba.azisabaachievements.api.AzisabaAchievementsProvider;
 import net.azisaba.azisabaachievements.api.Key;

@@ -1,4 +1,4 @@
-package net.azisaba.lobby.listeners;
+package net.azisaba.lobby.listener;
 
 import lombok.RequiredArgsConstructor;
 import net.azisaba.lobby.AzisabaLobby;

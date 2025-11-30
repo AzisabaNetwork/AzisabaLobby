@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import net.azisaba.azisabaachievements.api.AzisabaAchievementsProvider;
 import net.azisaba.azisabaachievements.api.Key;
 import net.azisaba.lobby.AzisabaLobby;
-import net.azisaba.lobby.config.SecretsFile;
+import net.azisaba.lobby.model.SecretsFile;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;

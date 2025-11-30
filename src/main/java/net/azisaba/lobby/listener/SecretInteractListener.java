@@ -1,11 +1,11 @@
-package net.azisaba.lobby.listeners;
+package net.azisaba.lobby.listener;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import net.azisaba.azisabaachievements.api.AzisabaAchievementsProvider;
 import net.azisaba.azisabaachievements.api.Key;
 import net.azisaba.lobby.AzisabaLobby;
-import net.azisaba.lobby.config.SecretsFile;
+import net.azisaba.lobby.model.SecretsFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;

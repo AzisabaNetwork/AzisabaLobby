@@ -1,4 +1,4 @@
-package net.azisaba.lobby.listeners;
+package net.azisaba.lobby.listener;
 
 import net.azisaba.lobby.util.WebhookUtil;
 import org.bukkit.ChatColor;

@@ -17,14 +17,14 @@ public class WebhookUtil {
     // send webhook to discord
     public static void sendDiscordWebhook(String configPath, String username, String content) {
         try {
-            String s = AzisabaLobby.getInstance().getConfig().getString(configPath);
+            String s = AzisabaLobby.instance().getConfig().getString(configPath);
             if (s == null || s.isEmpty()) {
                 return;
             }
             HttpsURLConnection con = (HttpsURLConnection) new URL(s).openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json");
-            con.setRequestProperty("User-Agent", "AzisabaLobby/" + AzisabaLobby.getInstance().getDescription().getVersion());
+            con.setRequestProperty("User-Agent", "AzisabaLobby/" + AzisabaLobby.instance().getDescription().getVersion());
             con.setRequestProperty("Accept", "application/json");
             con.setDoOutput(true);
             con.setConnectTimeout(5000);
@@ -42,7 +42,7 @@ public class WebhookUtil {
             InputStream errorStream = con.getErrorStream();
             if (errorStream != null) {
                 String err = new String(ByteStreams.toByteArray(errorStream), StandardCharsets.UTF_8);
-                AzisabaLobby.getInstance().getLogger().warning("Discord webhook returned " + con.getResponseCode() + ": " + err);
+                AzisabaLobby.instance().getLogger().warning("Discord webhook returned " + con.getResponseCode() + ": " + err);
             }
             con.getInputStream().close();
             con.disconnect();

@@ -1,4 +1,4 @@
-package net.azisaba.lobby.config;
+package net.azisaba.lobby.model;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;

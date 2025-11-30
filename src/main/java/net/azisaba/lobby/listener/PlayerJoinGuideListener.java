@@ -1,4 +1,4 @@
-package net.azisaba.lobby.listeners;
+package net.azisaba.lobby.listener;
 
 import net.azisaba.lobby.AzisabaLobby;
 import net.md_5.bungee.api.chat.ClickEvent;

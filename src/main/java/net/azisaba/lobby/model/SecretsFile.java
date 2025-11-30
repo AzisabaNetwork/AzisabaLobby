@@ -1,4 +1,4 @@
-package net.azisaba.lobby.config;
+package net.azisaba.lobby.model;
 
 import net.azisaba.lobby.util.MapUtil;
 import org.bukkit.Bukkit;

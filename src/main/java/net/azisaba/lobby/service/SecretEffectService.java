@@ -1,7 +1,7 @@
-package net.azisaba.lobby.tasks;
+package net.azisaba.lobby.service;
 
 import net.azisaba.lobby.AzisabaLobby;
-import net.azisaba.lobby.config.SecretsFile;
+import net.azisaba.lobby.model.SecretsFile;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class SecretEffectTask extends BukkitRunnable {
+public class SecretEffectService extends BukkitRunnable {
     private static final int DRAW_DISTANCE = 25;
     private static final List<ColorData> COLORS =
             Arrays.asList(
@@ -27,7 +27,7 @@ public class SecretEffectTask extends BukkitRunnable {
                     new ColorData(1, 0, 1)
             );
 
-    public SecretEffectTask(@NotNull AzisabaLobby plugin) {
+    public SecretEffectService(@NotNull AzisabaLobby plugin) {
         this.runTaskTimer(plugin, 4, 4);
     }
 

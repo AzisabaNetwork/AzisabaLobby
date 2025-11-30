@@ -1,4 +1,4 @@
-package net.azisaba.lobby.listeners;
+package net.azisaba.lobby.listener;
 
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;

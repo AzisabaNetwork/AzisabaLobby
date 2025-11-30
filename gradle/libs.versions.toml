@@ -2,11 +2,14 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-net-azisaba-azisabaachievements-api = "0.0.1-SNAPSHOT"
-org-projectlombok-lombok = "1.18.42"
 com-destroytokyo-paper-api = "1.12.2-R0.1-SNAPSHOT"
+net-azisaba-azisabaachievements-api = "0.0.1-SNAPSHOT"
+org-jetbrains-annotations = "26.0.2-1"
+org-projectlombok-lombok = "1.18.42"
 
 [libraries]
-net-azisaba-azisabaachievements-api = { module = "net.azisaba.azisabaachievements:api", version.ref = "net-azisaba-azisabaachievements-api" }
-org-projectlombok-lombok = { module = "org.projectlombok:lombok", version.ref = "org-projectlombok-lombok" }
 com-destroytokyo-paper-api = { module = "com.destroystokyo.paper:paper-api", version.ref="com-destroytokyo-paper-api" }
+net-azisaba-azisabaachievements-api = { module = "net.azisaba.azisabaachievements:api", version.ref = "net-azisaba-azisabaachievements-api" }
+org-jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref="org-jetbrains-annotations" }
+org-projectlombok-lombok = { module = "org.projectlombok:lombok", version.ref = "org-projectlombok-lombok" }
+org-spigotmc-spigot = { module = "org.spigotmc:spigot", version.ref="com-destroytokyo-paper-api" }

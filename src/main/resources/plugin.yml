@@ -1,8 +1,8 @@
-name: ${project.name}
+name: ${name}
 main: net.azisaba.lobby.AzisabaLobby
-version: ${project.version}
+version: ${version}
 author: siloneco
-description: ${project.description}
+description: ${description}
 api-version: 1.13
 softdepend:
   - AzisabaAchievements
