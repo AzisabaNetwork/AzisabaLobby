@@ -23,7 +23,7 @@ jobs:
         with:
           java-version: "8"
           distribution: "adopt"
-          cache: "maven"
+      - uses: gradle/gradle-build-action@v2
       - run: java -version
-      - run: mvn --version
-      - run: mvn -B package
+      - run: ./gradlew --version
+      - run: ./gradlew build
