@@ -11,24 +11,19 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven {
-        url = uri("https://hub.spigotmc.org/nexus/content/groups/public/")
+        name = "papermc"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
-
     maven {
         url = uri("https://repo.azisaba.net/repository/maven-public/")
     }
-
     maven {
         url = uri("https://repo.acrylicstyle.xyz/repository/maven-public/")
-    }
-
-    maven {
-        url = uri("https://repo.maven.apache.org/maven2/")
     }
 }
 
 dependencies {
-    compileOnly(libs.org.spigotmc.spigot.api)
+    compileOnly(libs.com.destroytokyo.paper.api)
     compileOnly(libs.org.projectlombok.lombok)
     compileOnly(libs.net.azisaba.azisabaachievements.api)
     annotationProcessor(libs.org.projectlombok.lombok)

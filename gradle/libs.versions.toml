@@ -4,9 +4,9 @@
 [versions]
 net-azisaba-azisabaachievements-api = "0.0.1-SNAPSHOT"
 org-projectlombok-lombok = "1.18.42"
-org-spigotmc-spigot-api = "1.12.2-R0.1-SNAPSHOT"
+com-destroytokyo-paper-api = "1.12.2-R0.1-SNAPSHOT"
 
 [libraries]
 net-azisaba-azisabaachievements-api = { module = "net.azisaba.azisabaachievements:api", version.ref = "net-azisaba-azisabaachievements-api" }
 org-projectlombok-lombok = { module = "org.projectlombok:lombok", version.ref = "org-projectlombok-lombok" }
-org-spigotmc-spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "org-spigotmc-spigot-api" }
+com-destroytokyo-paper-api = { module = "com.destroystokyo.paper:paper-api", version.ref="com-destroytokyo-paper-api" }
