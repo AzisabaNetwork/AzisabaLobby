@@ -8,6 +8,7 @@ plugins {
 }
 
 repositories {
+    mavenCentral()
     mavenLocal()
     maven {
         url = uri("https://hub.spigotmc.org/nexus/content/groups/public/")
@@ -30,6 +31,7 @@ dependencies {
     compileOnly(libs.org.spigotmc.spigot.api)
     compileOnly(libs.org.projectlombok.lombok)
     compileOnly(libs.net.azisaba.azisabaachievements.api)
+    annotationProcessor(libs.org.projectlombok.lombok)
 }
 
 group = "net.azisaba"
