@@ -29,7 +29,7 @@ dependencies {
 }
 
 group = "net.azisaba"
-version = "1.3.0"
+version = "1.4.0"
 description = "AzisabaLobby"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
