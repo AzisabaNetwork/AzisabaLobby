@@ -243,7 +243,7 @@ public class GameMenuGui implements InventoryHolder, Listener {
                 ChatColor.GRAY + "現在，取り組みの一環として新しいゲームメニュー",
                 ChatColor.GRAY + "をテストしています．",
                 ChatColor.GRAY + "不便な点や，その他，ご意見がございましたら，",
-                ChatColor.GRAY + "Discordで担当者(" + ChatColor.WHITE + "@tksimeji" + ChatColor.GRAY + ")までお気軽にDMをお寄せください．"
+                ChatColor.GRAY + "Discordでお気軽にDMをお寄せください．"
         ));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
