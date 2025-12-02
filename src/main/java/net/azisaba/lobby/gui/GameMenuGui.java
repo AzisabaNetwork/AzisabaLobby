@@ -49,6 +49,7 @@ public class GameMenuGui implements InventoryHolder, Listener {
         inventory.setItem(42, wikiItem());
 
         inventory.setItem(49, closeItem());
+        inventory.setItem(53, testAnnounceItem());
 
         updateService.runTaskTimer(AzisabaLobby.instance(), 0, 15);
     }
@@ -138,7 +139,7 @@ public class GameMenuGui implements InventoryHolder, Listener {
         itemMeta.setLore(Arrays.asList(
                 "",
                 ChatColor.GREEN + player.getName() + ChatColor.GRAY + "さんアジ鯖にようこそ！",
-                ChatColor.DARK_GRAY + "合計" + ChatColor.AQUA + AzisabaLobby.instance().gameMap().values().stream().mapToInt(Game::getPlayerCount).sum() + ChatColor.DARK_GRAY + "人がプレイ中"
+                ChatColor.DARK_GRAY + "合計" + ChatColor.AQUA + AzisabaLobby.instance().gameMap().values().stream().mapToInt(Game::getPlayerCount).sum() + "人" + ChatColor.DARK_GRAY + "がプレイ中"
         ));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
@@ -228,6 +229,22 @@ public class GameMenuGui implements InventoryHolder, Listener {
         final ItemStack itemStack = new ItemStack(Material.ARROW);
         final ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.GREEN + "メニューを閉じる");
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    private @NotNull ItemStack testAnnounceItem() {
+        final ItemStack itemStack = new ItemStack(Material.PAPER);
+        final ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "新しいメニューをテスト中");
+        itemMeta.setLore(Arrays.asList(
+                ChatColor.GRAY + "アジ鯖では，ユーザー体験の改善に向けた，",
+                ChatColor.GRAY + "取り組みを進めています．",
+                ChatColor.GRAY + "現在，取り組みの一環として新しいゲームメニュー",
+                ChatColor.GRAY + "をテストしています．",
+                ChatColor.GRAY + "不便な点や，その他，ご意見がございましたら，",
+                ChatColor.GRAY + "Discordで担当者(" + ChatColor.WHITE + "@tksimeji" + ChatColor.GRAY + ")までお気軽にDMをお寄せください．"
+        ));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
