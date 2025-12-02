@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class GameMenuGui implements InventoryHolder, Listener {
     private final @NotNull Player player;
@@ -32,7 +33,7 @@ public class GameMenuGui implements InventoryHolder, Listener {
         @Override
         public void run() {
             inventory.setItem(4, azisabaItem());
-            AzisabaLobby.instance().gameMap().forEach((slot, server) -> inventory.setItem(slot, server.toItemStack()));
+            AzisabaLobby.instance().gameMap().forEach((slot, game) -> inventory.setItem(slot, gameItem(game)));
         }
     };
 
@@ -98,9 +99,8 @@ public class GameMenuGui implements InventoryHolder, Listener {
 
     @EventHandler
     public void onInventoryDrag(final @NotNull InventoryDragEvent event) {
-        if (event.getInventory().getHolder() != this) {
+        if (event.getInventory().getHolder() == this) {
             event.setCancelled(true);
-            updateService.cancel();
         }
     }
 
@@ -109,6 +109,8 @@ public class GameMenuGui implements InventoryHolder, Listener {
         if (event.getInventory().getHolder() == this) {
             InventoryClickEvent.getHandlerList().unregister(this);
             InventoryDragEvent.getHandlerList().unregister(this);
+            updateService.cancel();
+            player.updateInventory();
         }
     }
 
@@ -136,8 +138,28 @@ public class GameMenuGui implements InventoryHolder, Listener {
         itemMeta.setLore(Arrays.asList(
                 "",
                 ChatColor.GREEN + player.getName() + ChatColor.GRAY + "さんアジ鯖にようこそ！",
-                ChatColor.DARK_GRAY + "合計" + AzisabaLobby.instance().gameMap().values().stream().mapToInt(Game::getPlayerCount).sum() + "人がプレイ中"
+                ChatColor.DARK_GRAY + "合計" + ChatColor.AQUA + AzisabaLobby.instance().gameMap().values().stream().mapToInt(Game::getPlayerCount).sum() + ChatColor.DARK_GRAY + "人がプレイ中"
         ));
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    private @NotNull ItemStack gameItem(final @NotNull Game game) {
+        final ItemStack itemStack = game.toItemStack();
+
+        final ItemMeta itemMeta = itemStack.getItemMeta();
+        final List<String> lore = itemMeta.getLore();
+        lore.add("");
+        if (game.isSelectOnly()) {
+            lore.add(ChatColor.GREEN + "クリックして接続サーバーを選択！");
+        } else if (game.isSelectableServers()) {
+            lore.add(ChatColor.GREEN + "クリックしてプレイ！");
+            lore.add(ChatColor.GRAY + "(右クリックして接続サーバーを選択できます)");
+        } else {
+            lore.add(ChatColor.GREEN + "クリックしてプレイ！");
+        }
+
+        itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }

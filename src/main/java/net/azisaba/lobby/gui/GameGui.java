@@ -73,11 +73,6 @@ public class GameGui implements InventoryHolder, Listener {
 
         event.setCancelled(true);
 
-        if (event.getSlot() == 4) {
-            game.tryConnection(player);
-            return;
-        }
-
         if (event.getSlot() == 48) {
             final InventoryHolder gameMenuGui = new GameMenuGui(player);
             player.openInventory(gameMenuGui.getInventory());

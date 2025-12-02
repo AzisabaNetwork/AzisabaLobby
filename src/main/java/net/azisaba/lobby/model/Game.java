@@ -170,7 +170,6 @@ public class Game {
             lore.add(ChatColor.WHITE + "対応バージョン：" + ChatColor.YELLOW + compatibleVersion);
         }
         lore.add("");
-        lore.add(ChatColor.GREEN + "クリックしてプレイ！");
         lore.add(ChatColor.GRAY.toString() + getPlayerCount() + "人がプレイ中");
         itemMeta.setLore(lore);
 
