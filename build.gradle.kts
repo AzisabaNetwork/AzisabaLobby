@@ -2,6 +2,7 @@ plugins {
     `java-library`
     `maven-publish`
     id("xyz.jpenilla.run-paper") version "3.0.2"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
 }
 
 repositories {
@@ -20,18 +21,17 @@ repositories {
 }
 
 dependencies {
-    compileOnly(libs.com.destroytokyo.paper.api)
+    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
     compileOnly(libs.org.jetbrains.annotations)
     compileOnly(libs.org.projectlombok.lombok)
-    compileOnly(libs.org.spigotmc.spigot)
     compileOnly(libs.net.azisaba.azisabaachievements.api)
     annotationProcessor(libs.org.projectlombok.lombok)
 }
 
 group = "net.azisaba"
-version = "1.4.1"
+version = "2.0.0"
 description = "AzisabaLobby"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_25
 
 publishing {
     publications.create<MavenPublication>("maven") {
@@ -41,7 +41,7 @@ publishing {
 
 tasks {
     runServer {
-        minecraftVersion("1.12.2")
+        minecraftVersion("1.21.11")
     }
 }
 

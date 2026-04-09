@@ -153,9 +153,7 @@ public class Game {
                 ItemFlag.HIDE_ATTRIBUTES,
                 ItemFlag.HIDE_DESTROYS,
                 ItemFlag.HIDE_ENCHANTS,
-                ItemFlag.HIDE_PLACED_ON,
-                ItemFlag.HIDE_POTION_EFFECTS,
-                ItemFlag.HIDE_POTION_EFFECTS
+                ItemFlag.HIDE_PLACED_ON
         );
 
         final List<String> lore = new ArrayList<>();

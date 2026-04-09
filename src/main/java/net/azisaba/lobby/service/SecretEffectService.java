@@ -3,6 +3,7 @@ package net.azisaba.lobby.service;
 import net.azisaba.lobby.AzisabaLobby;
 import net.azisaba.lobby.model.SecretsFile;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -54,22 +55,17 @@ public class SecretEffectService extends BukkitRunnable {
                         double py = location.getY() + 0.5;
                         double pz = location.getZ() + modZ;
                         ColorData colorData = COLORS.get((x * z) % COLORS.size());
-                        player.spawnParticle(Particle.REDSTONE, px, py, pz, 0, colorData.red, colorData.green, colorData.blue, 1);
+                        int r = (int) (colorData.red * 255);
+                        int g = (int) (colorData.green * 255);
+                        int b = (int) (colorData.blue * 255);
+                        Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(r, g, b), 1.0f);
+                        player.spawnParticle(Particle.DUST, px, py, pz, 0, dustOptions);
                     }
                 }
             }
         }
     }
 
-    private static class ColorData {
-        public final double red;
-        public final double green;
-        public final double blue;
-
-        public ColorData(double red, double green, double blue) {
-            this.red = red;
-            this.green = green;
-            this.blue = blue;
-        }
+    private record ColorData(double red, double green, double blue) {
     }
 }

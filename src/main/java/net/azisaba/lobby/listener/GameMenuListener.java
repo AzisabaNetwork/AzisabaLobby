@@ -25,8 +25,7 @@ public class GameMenuListener implements Listener {
     private static final ItemStack SERVER_SELECTOR_ITEM = createGameMenuItem();
 
     private static @NotNull ItemStack createGameMenuItem() {
-        final ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, 1);
-        itemStack.setDurability((short) 3);
+        final ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
         final SkullMeta itemMeta = (SkullMeta) itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.GREEN + "ゲームメニュー");
         itemMeta.setLore(Collections.singletonList(ChatColor.GRAY + "右クリックでゲームの選択画面を開きます！"));

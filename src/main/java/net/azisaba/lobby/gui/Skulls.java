@@ -32,7 +32,7 @@ public class Skulls {
     }
 
     private static @NotNull ItemStack create(final @NotNull String textures) {
-        final ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        final ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
         final SkullMeta itemMeta = (SkullMeta) itemStack.getItemMeta();
         final PlayerProfile playerProfile = Bukkit.createProfile(UUID.randomUUID(), null);
         playerProfile.setProperty(new ProfileProperty("textures", textures));
