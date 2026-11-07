@@ -8,7 +8,7 @@ servers:
     itemDamage: 0
     itemTag: "{CustomTags:'aaaa'}"
     name: "&aCool server" # required
-    servers: # required
+    servers: # required unless connectionMethod is transfer
     - coolserver1
     - coolserver2
     countedServers:
@@ -22,3 +22,16 @@ servers:
     recommendedVersion: "2.0"
     compatibleVersion: "1.RV-pre1 - 2.0"
     selectableServers: true # right click to open server menu (a screen which contains coolserver1, and coolserver2)
+    connectionMethod: proxy # proxy (default) | transfer
+    # transferAddress: "coolserver.example.com:25565" # required when connectionMethod is transfer
+
+  # '1':
+  #   material: ENDER_EYE
+  #   name: "&aDirect transfer game"
+  #   servers: [] # not required for transfer games
+  #   countedServers: [] # player counts are read from the proxy, so they stay 0 for a standalone server
+  #   description:
+  #   - "Connects the client directly to another server"
+  #   status: "&a公開中"
+  #   connectionMethod: transfer
+  #   transferAddress: "game.example.com:25565" # host:port. Use "[::1]:25565" for IPv6.

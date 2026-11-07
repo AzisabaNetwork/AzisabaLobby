@@ -40,6 +40,7 @@ public class GameGui implements InventoryHolder, Listener {
 
             int currentServerIndex = 0;
             for (final String server : game.getServers()) {
+                if (currentServerIndex >= serverSlots.length) break;
                 final int slot = serverSlots[currentServerIndex++];
                 inventory.setItem(slot, serverItem(server));
                 serverMap.put(slot, server);

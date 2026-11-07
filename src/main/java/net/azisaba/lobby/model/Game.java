@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NonNull;
 import net.azisaba.lobby.AzisabaLobby;
 import net.azisaba.lobby.util.NMSUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,7 +17,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +100,18 @@ public class Game {
      */
     private final boolean selectOnly;
 
+    /**
+     * Defines how a player is sent to this game.
+     */
+    @NonNull
+    private final ConnectionMethod connectionMethod;
+
+    /**
+     * Defines the destination used by {@link ConnectionMethod#TRANSFER}. Null for proxied games or when the
+     * configuration value is invalid.
+     */
+    private final @Nullable InetSocketAddress transferAddress;
+
     private final @NotNull Map<String, Integer> playerCountMap = new ConcurrentHashMap<>();
 
     public int getPlayerCount() {
@@ -132,16 +148,74 @@ public class Game {
         }
     }
 
-    public void tryConnection(final @NotNull Player player) {
-        final String server = servers.get(new Random().nextInt(servers.size()));
-        tryConnection(player, server);
+    public boolean isTransfer() {
+        return connectionMethod == ConnectionMethod.TRANSFER;
     }
 
-    public void tryConnection(final @NotNull Player player, final @NotNull String server) {;
+    /**
+     * Returns whether clicking this game in the menu can start a connection attempt.
+     * A transfer game does not need any entry in {@link #servers} because it uses a single destination.
+     *
+     * @return true if the game can be clicked.
+     */
+    public boolean canAttemptConnection() {
+        return isTransfer() || !servers.isEmpty();
+    }
+
+    public void tryConnection(final @NotNull Player player) {
+        if (isTransfer()) {
+            tryTransfer(player);
+            return;
+        }
+        if (servers.isEmpty()) return;
+        tryConnection(player, servers.get(new Random().nextInt(servers.size())));
+    }
+
+    public void tryConnection(final @NotNull Player player, final @NotNull String server) {
+        if (isTransfer()) {
+            tryTransfer(player);
+            return;
+        }
         final ByteArrayDataOutput bytes = ByteStreams.newDataOutput();
         bytes.writeUTF("Connect");
         bytes.writeUTF(server);
         player.sendPluginMessage(AzisabaLobby.instance(), "BungeeCord", bytes.toByteArray());
+    }
+
+    /**
+     * Sends a transfer packet so that the client reconnects to {@link #transferAddress} directly.
+     * There is intentionally no fallback to the proxy: silently using the proxy would bypass the intended route.
+     *
+     * @param player the player to transfer.
+     */
+    private void tryTransfer(final @NotNull Player player) {
+        final @Nullable InetSocketAddress address = transferAddress;
+        if (address == null) {
+            AzisabaLobby.instance().getLogger().warning(
+                    "Game '" + name + "' uses the transfer connection method but has no valid transferAddress; "
+                            + "refusing to connect " + player.getName()
+            );
+            player.sendMessage(Component.text(
+                    "このゲームの転送先が設定されていないため接続できません。運営にお問い合わせください。",
+                    NamedTextColor.RED
+            ));
+            return;
+        }
+
+        try {
+            // Close the inventory first so that its update task stops before the client is disconnected.
+            player.closeInventory();
+            player.transfer(address.getHostString(), address.getPort());
+        } catch (IllegalStateException e) {
+            AzisabaLobby.instance().getLogger().warning(
+                    "Failed to transfer " + player.getName() + " to " + address + " for game '" + name + "': "
+                            + e.getMessage()
+            );
+            player.sendMessage(Component.text(
+                    "サーバーへの転送に失敗しました。しばらくしてからもう一度お試しください。",
+                    NamedTextColor.RED
+            ));
+        }
     }
 
     public @NotNull ItemStack toItemStack() {
@@ -169,6 +243,9 @@ public class Game {
         }
         lore.add("");
         lore.add(ChatColor.GRAY.toString() + getPlayerCount() + "人がプレイ中");
+        if (isTransfer()) {
+            lore.add(ChatColor.DARK_GRAY + "(サーバーへ直接転送されます)");
+        }
         itemMeta.setLore(lore);
 
         if (itemTag != null) {

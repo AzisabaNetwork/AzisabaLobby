@@ -26,6 +26,10 @@ dependencies {
     compileOnly(libs.org.projectlombok.lombok)
     compileOnly(libs.net.azisaba.azisabaachievements.api)
     annotationProcessor(libs.org.projectlombok.lombok)
+
+    testImplementation(platform(libs.org.junit.junit.bom))
+    testImplementation(libs.bundles.junit)
+    testRuntimeOnly(libs.org.junit.platform.launcher)
 }
 
 group = "net.azisaba"
@@ -42,6 +46,10 @@ publishing {
 tasks {
     runServer {
         minecraftVersion("1.21.11")
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 
