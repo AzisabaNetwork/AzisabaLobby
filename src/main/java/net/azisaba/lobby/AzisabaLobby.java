@@ -3,6 +3,7 @@ package net.azisaba.lobby;
 import net.azisaba.azisabaachievements.api.AzisabaAchievementsProvider;
 import net.azisaba.azisabaachievements.api.Key;
 import net.azisaba.lobby.commands.SecretsCommand;
+import net.azisaba.lobby.model.ConnectionMethod;
 import net.azisaba.lobby.model.Game;
 import net.azisaba.lobby.model.SecretsFile;
 import net.azisaba.lobby.listener.*;
@@ -18,6 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.net.InetSocketAddress;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -112,6 +114,8 @@ public class AzisabaLobby extends JavaPlugin {
          *     recommendedVersion: "2.0"
          *     compatibleVersion: "1.RV-pre1 - 2.0"
          *     selectableServers: true # right click to open server menu (a screen which contains coolserver1, and coolserver2)
+         *     connectionMethod: proxy # proxy (default) or transfer
+         *     transferAddress: "coolserver.example.com:25565" # required when connectionMethod is transfer
          */
         servers.clear();
         getConfig().getConfigurationSection("servers").getValues(false).forEach((key, value) -> {
@@ -134,12 +138,14 @@ public class AzisabaLobby extends JavaPlugin {
             String name = ChatColor.translateAlternateColorCodes('&', map.get("name").toString());
             List<String> servers = (List<String>) map.get("servers");
             if (servers == null) {
-                servers = Collections.singletonList((String) map.get("server"));
+                servers = map.get("server") == null ? Collections.emptyList() : Collections.singletonList((String) map.get("server"));
             }
+            servers = servers.stream().filter(Objects::nonNull).collect(Collectors.toList());
             List<String> countedServers = (List<String>) map.get("countedServers");
             if (countedServers == null) {
                 countedServers = servers;
             }
+            countedServers = countedServers.stream().filter(Objects::nonNull).collect(Collectors.toList());
             List<String> description = (List<String>) map.get("description");
             if (description == null) description = Collections.emptyList();
             String status = ChatColor.translateAlternateColorCodes('&', (String) map.getOrDefault("status", "開発中"));
@@ -153,6 +159,42 @@ public class AzisabaLobby extends JavaPlugin {
             }
             boolean selectableServers = Boolean.parseBoolean(String.valueOf(map.get("selectableServers")));
             boolean selectOnly = Boolean.parseBoolean(String.valueOf(map.get("selectOnly")));
+
+            final String rawConnectionMethod = (String) map.get("connectionMethod");
+            ConnectionMethod connectionMethod = ConnectionMethod.fromConfig(rawConnectionMethod);
+            if (rawConnectionMethod != null && ConnectionMethod.parse(rawConnectionMethod) == null) {
+                getLogger().warning(
+                        "Game '" + name + "' has an unknown connectionMethod '" + rawConnectionMethod
+                                + "'. Falling back to proxy."
+                );
+            }
+            final String rawTransferAddress = (String) map.get("transferAddress");
+            InetSocketAddress transferAddress = Util.parseHostAndPort(rawTransferAddress);
+            if (connectionMethod == ConnectionMethod.TRANSFER) {
+                if (transferAddress == null) {
+                    getLogger().warning(
+                            "Game '" + name + "' uses connectionMethod 'transfer' but transferAddress '"
+                                    + rawTransferAddress + "' is not a valid host:port; players cannot connect."
+                    );
+                }
+                if (selectableServers || selectOnly) {
+                    getLogger().warning(
+                            "Game '" + name + "' uses connectionMethod 'transfer', so selectableServers / selectOnly"
+                                    + " are ignored."
+                    );
+                    selectableServers = false;
+                    selectOnly = false;
+                }
+            } else {
+                if (rawTransferAddress != null) {
+                    getLogger().warning(
+                            "Game '" + name + "' sets transferAddress but connectionMethod is not 'transfer';"
+                                    + " transferAddress is ignored."
+                    );
+                }
+                transferAddress = null;
+            }
+
             this.servers.put(
                     slot,
                     new Game(
@@ -167,7 +209,9 @@ public class AzisabaLobby extends JavaPlugin {
                             recommendedVersion,
                             compatibleVersion,
                             selectableServers,
-                            selectOnly
+                            selectOnly,
+                            connectionMethod,
+                            transferAddress
                     )
             );
         });

@@ -88,9 +88,14 @@ public class GameMenuGui implements InventoryHolder, Listener {
         }
 
         final @Nullable Game game = AzisabaLobby.instance().gameBySlot(event.getSlot());
-        if (game == null || game.getServers().isEmpty()) return;
+        if (game == null || !game.canAttemptConnection()) return;
 
-        if (shouldOpenGameMenu(game, event.getClick())) {
+        if (game.isTransfer()) {
+            // A transfer game has a single destination, so any click starts the transfer and no server menu opens.
+            if (event.getClick() != ClickType.MIDDLE) {
+                game.tryConnection(player);
+            }
+        } else if (shouldOpenGameMenu(game, event.getClick())) {
             final GameGui gameGui = new GameGui(player, game);
             player.openInventory(gameGui.getInventory());
         } else if (event.getClick().isLeftClick()) {
@@ -127,6 +132,7 @@ public class GameMenuGui implements InventoryHolder, Listener {
     }
 
     private boolean shouldOpenGameMenu(final @NotNull Game game, final @NotNull ClickType clickType) {
+        if (game.isTransfer()) return false;
         return game.isSelectOnly()
                 || (game.isSelectableServers() && clickType.isRightClick())
                 || (player.hasPermission("azisabalobby.show-all-server-menu") && clickType == ClickType.MIDDLE);
@@ -151,7 +157,9 @@ public class GameMenuGui implements InventoryHolder, Listener {
         final ItemMeta itemMeta = itemStack.getItemMeta();
         final List<String> lore = itemMeta.getLore();
         lore.add("");
-        if (game.isSelectOnly()) {
+        if (game.isTransfer()) {
+            lore.add(ChatColor.GREEN + "クリックしてプレイ！");
+        } else if (game.isSelectOnly()) {
             lore.add(ChatColor.GREEN + "クリックして接続サーバーを選択！");
         } else if (game.isSelectableServers()) {
             lore.add(ChatColor.GREEN + "クリックしてプレイ！");
