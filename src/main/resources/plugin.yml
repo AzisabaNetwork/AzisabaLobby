@@ -14,7 +14,15 @@ permissions:
   azisabalobby.allow-destroy-painting:
     default: op
     description: 額縁の破壊に関するパーミッションです。
+  azisabalobby.command.reload:
+    default: op
+    description: /azisabalobby reload で設定を再読み込みするためのパーミッションです。
 
 commands:
   secrets:
     permission: azisabalobby.command.secrets
+  azisabalobby:
+    description: AzisabaLobby の管理コマンドです。
+    usage: /azisabalobby reload
+    aliases:
+      - alobby
