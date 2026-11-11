@@ -20,6 +20,24 @@
 - `azisabalobby.allow-flight`
   - Whether the player is allowed to fly.
   - default: `op`
+- `azisabalobby.command.reload`
+  - Allows running `/azisabalobby reload`.
+  - default: `op`
+
+## Commands
+
+### `/azisabalobby reload` (alias: `/alobby reload`)
+
+Reloads `config.yml` from disk and rebuilds the game menu without restarting the server.
+The new configuration is applied only after every entry under `servers` has been parsed successfully,
+so an invalid configuration leaves the previously loaded menu in place and reports the error to the
+command sender and the console.
+
+Requires the `azisabalobby.command.reload` permission.
+
+Note that this only reloads the plugin configuration. `secrets.yml` is loaded when the plugin starts and is
+saved periodically, so secret locations edited by hand while the server is running are not reloaded by this
+command.
 
 ## Connection methods
 
